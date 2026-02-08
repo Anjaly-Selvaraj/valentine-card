@@ -3,32 +3,75 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>💝 Valentine</title>
+<title>💖 Valentine</title>
 
 <style>
 body {
-  font-family: Arial;
-  background: #fff0f5;
+  font-family: "Arial", sans-serif;
   text-align: center;
   padding: 30px;
+  min-height: 100vh;
+
+  /* 🌹 Default romantic background */
+  background-image: url("https://images.unsplash.com/photo-1518895949257-7621c3c786d7");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-h1 { color: #d6336c; }
+.card {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 16px;
+  padding: 30px 20px;
+  max-width: 420px;
+  margin: auto;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+h1 {
+  color: #d6336c;
+  margin-bottom: 10px;
+}
+
+.message {
+  font-size: 18px;
+  margin: 20px 0;
+  line-height: 1.6;
+}
+
+.from {
+  margin-top: 15px;
+  font-style: italic;
+  color: #555;
+}
+
+.footer {
+  margin-top: 20px;
+  font-size: 13px;
+  color: #777;
+}
 </style>
 </head>
 
 <body>
 
-<h1>💖 Valentine Message 💖</h1>
+<div class="card">
+  <h1>Hi <span id="to"></span> 💝</h1>
 
-<p><b>From:</b> <span id="from"></span></p>
-<p><b>To:</b> <span id="to"></span></p>
+  <div class="message" id="msg"></div>
 
-<p id="msg"></p>
+  <div class="from">
+    — By <span id="from"></span>
+  </div>
 
-<p style="color:#777;margin-top:20px">
-This page will close automatically 💕
-</p>
+  <div class="footer">
+    This page will close automatically 💕
+  </div>
+</div>
 
 <script>
 const params = new URLSearchParams(window.location.search);
@@ -36,11 +79,14 @@ const data = JSON.parse(
   decodeURIComponent(escape(atob(params.get("data"))))
 );
 
-from.innerText = data.from;
-to.innerText = data.to;
-msg.innerText = data.message;
+document.getElementById("to").innerText = data.to;
+document.getElementById("from").innerText = data.from;
+document.getElementById("msg").innerText = data.message;
 
-setTimeout(()=>window.close(),60000);
+// ⏱ Auto-close after 60 seconds
+setTimeout(() => {
+  window.close();
+}, 60000);
 </script>
 
 </body>
