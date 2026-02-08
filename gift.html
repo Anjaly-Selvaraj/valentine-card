@@ -3,38 +3,75 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>💖 Valentine</title>
+<title>🎁 Valentine Gift</title>
 
 <style>
 body {
-  font-family: Arial, sans-serif;
-  background: #fff0f5;
+  font-family: Arial;
+  background: #ffe6eb;
   text-align: center;
-  padding: 30px;
+  padding: 25px;
+  overflow: hidden;
 }
 
-h1 {
-  color: #d6336c;
+h2 { color: #d6336c; }
+
+#gift {
+  font-size: 120px;
+  cursor: pointer;
+  animation: bounce 1.5s infinite;
 }
 
-p {
-  font-size: 18px;
+@keyframes bounce {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+#content { display: none; }
+
+button {
+  padding: 12px 28px;
+  margin: 10px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.yes { background: #ff4d6d; color: white; }
+.no { background: #adb5bd; }
+
+.heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: 24px;
+  animation: floatUp 3s linear forwards;
+}
+
+@keyframes floatUp {
+  0% { opacity: 1; }
+  100% { transform: translateY(-600px); opacity: 0; }
 }
 </style>
 </head>
 
 <body>
 
-<h1>💝 Valentine Message 💝</h1>
+<h2>Happy Valentine’s Day, My Dear 💝</h2>
 
-<p><strong>From:</strong> <span id="from"></span></p>
-<p><strong>To:</strong> <span id="to"></span></p>
+<div id="gift">🎁</div>
 
-<p id="msg"></p>
+<div id="content">
+  <p><b>From:</b> <span id="from"></span></p>
+  <p><b>To:</b> <span id="to"></span></p>
+  <p id="msg"></p>
+  <h3 id="question"></h3>
 
-<p style="margin-top:20px;color:#777">
-This page will close automatically 💕
-</p>
+  <button class="yes" onclick="yes()">YES 💖</button>
+  <button class="no" onclick="no()">NO 💔</button>
+</div>
+
+<audio id="music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 
 <script>
 const params = new URLSearchParams(window.location.search);
@@ -42,14 +79,36 @@ const data = JSON.parse(
   decodeURIComponent(escape(atob(params.get("data"))))
 );
 
-from.innerText = data.from;
-to.innerText = data.to;
-msg.innerText = data.message;
+gift.onclick = () => {
+  from.innerText = data.from;
+  to.innerText = data.to;
+  msg.innerText = data.message;
+  question.innerText = data.question;
+  content.style.display = "block";
+};
 
-// ⏱ auto close after 60 seconds
-setTimeout(() => {
-  window.close();
-}, 60000);
+function yes() {
+  music.play();
+
+  const hearts = setInterval(() => {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerText = "💓";
+    h.style.left = Math.random() * window.innerWidth + "px";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),3000);
+  }, 200);
+
+  setTimeout(() => {
+    clearInterval(hearts);
+    location.href = "reveal.html?data=" + params.get("data");
+  }, 2000);
+}
+
+function no() {
+  document.body.innerHTML = "<h1>😭😭😭</h1>";
+  setTimeout(()=>window.close(),2000);
+}
 </script>
 
 </body>
