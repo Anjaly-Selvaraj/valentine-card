@@ -9,29 +9,7 @@
 <title>Create Valentine 💖</title>
 
 <style>
-.toggle {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.toggle button {
-  flex: 1;
-  padding: 12px;
-  border-radius: 20px;
-  border: none;
-  font-size: 14px;
-  cursor: pointer;
-  background: #fdecef;
-  color: #c9184a;
-}
-
-.toggle button.active {
-  background: #ff4d6d;
-  color: white;
-  font-weight: bold;
-}
-  
+/* ===== RESET ===== */
 html, body {
   margin: 0;
   padding: 0;
@@ -58,7 +36,7 @@ html, body {
   border-radius: 26px;
   padding: 22px 18px;
   box-shadow: 0 8px 18px rgba(0,0,0,0.15);
-  overflow: hidden; /* 🔒 CRITICAL */
+  overflow: hidden;
 }
 
 h2 {
@@ -67,7 +45,31 @@ h2 {
   margin: 6px 0 18px;
 }
 
-/* ===== FIELDS ===== */
+/* ===== TOGGLE ===== */
+.toggle {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.toggle button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 22px;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  background: #fdecef;
+  color: #c9184a;
+}
+
+.toggle button.active {
+  background: #ff4d6d;
+  color: white;
+  font-weight: bold;
+}
+
+/* ===== FORM ===== */
 label {
   font-size: 14px;
   color: #c9184a;
@@ -79,7 +81,7 @@ label {
   margin-top: 6px;
   background: #fdecef;
   border-radius: 16px;
-  padding: 2px; /* creates safe inset */
+  padding: 2px;
 }
 
 .field input,
@@ -152,6 +154,12 @@ button {
 
     <h2>Create Valentine 💖</h2>
 
+    <!-- TOGGLE -->
+    <div class="toggle">
+      <button id="friendBtn" class="active" onclick="selectType('friend')">🤍 Friend</button>
+      <button id="loveBtn" onclick="selectType('love')">❤️ Love</button>
+    </div>
+
     <label>Your Name</label>
     <div class="field">
       <input id="from" placeholder="Your name">
@@ -159,7 +167,7 @@ button {
 
     <label>Your Valentine’s Name</label>
     <div class="field">
-      <input id="to" placeholder="Valentine’s name">
+      <input id="to" placeholder="Their name">
     </div>
 
     <label>Your Message</label>
@@ -170,11 +178,6 @@ button {
     <div class="counter">
       <span id="wordCount">0</span> / 250 words
     </div>
-    <label>Choose Type</label>
-    <div class="toggle">
-      <button type="button" id="friendBtn" class="active" onclick="selectType('friend')">🤍 Friend</button>
-      <button type="button" id="loveBtn" onclick="selectType('love')">❤️ Love</button>
-    </div>
 
     <div class="buttons">
       <button class="generate" onclick="generate()">Generate 💖</button>
@@ -182,7 +185,7 @@ button {
     </div>
 
     <div class="footer">
-      Made with Anjaly❤️
+      Made with ❤️
     </div>
 
   </div>
@@ -190,10 +193,20 @@ button {
 
 <script>
 let finalLink = "";
+let selectedType = "friend";
+
 const msgBox = document.getElementById("message");
 const counter = document.getElementById("wordCount");
 
-/* 🔢 250 WORD LIMIT */
+/* ===== TOGGLE LOGIC ===== */
+function selectType(type) {
+  selectedType = type;
+  document.getElementById("friendBtn").classList.remove("active");
+  document.getElementById("loveBtn").classList.remove("active");
+  document.getElementById(type + "Btn").classList.add("active");
+}
+
+/* ===== WORD LIMIT ===== */
 msgBox.addEventListener("input", () => {
   let words = msgBox.value.trim().split(/\s+/).filter(Boolean);
   if (words.length > 250) {
@@ -203,6 +216,7 @@ msgBox.addEventListener("input", () => {
   counter.textContent = words.length;
 });
 
+/* ===== GENERATE LINK ===== */
 function generate() {
   if (!from.value || !to.value || !message.value) {
     alert("Please fill all fields 💕");
@@ -212,7 +226,8 @@ function generate() {
   const data = {
     from: from.value,
     to: to.value,
-    message: message.value
+    message: message.value,
+    type: selectedType
   };
 
   const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
@@ -224,6 +239,7 @@ function generate() {
   document.getElementById("copyBtn").style.display = "block";
 }
 
+/* ===== COPY ===== */
 function copy() {
   navigator.clipboard.writeText(finalLink);
   alert("Link copied 💖");
