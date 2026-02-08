@@ -27,7 +27,10 @@ button {
   border-radius: 6px;
   font-size: 16px;
 }
-#copyBtn { display:none; }
+#copyBtn {
+  display: none;
+  margin-top: 10px;
+}
 </style>
 </head>
 
@@ -37,8 +40,8 @@ button {
 
 <input id="from" placeholder="From">
 <input id="to" placeholder="To">
-<textarea id="message" placeholder="Message"></textarea>
-<input id="question" placeholder="Question">
+<input id="question" placeholder="Gift Box Question">
+<textarea id="message" placeholder="Gift box Message"></textarea>
 <input type="file" id="image" accept="image/*">
 
 <button onclick="generate()">Generate</button>
@@ -48,5 +51,43 @@ button {
 let finalLink = "";
 
 function generate() {
-  const reader = new FileReader();
-  const file = image
+  const file = image.files[0];
+
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function () {
+      createLink(reader.result);
+    };
+    reader.readAsDataURL(file);
+  } else {
+    createLink("");
+  }
+}
+
+function createLink(imgData) {
+  const data = {
+    from: from.value,
+    to: to.value,
+    message: message.value,
+    question: question.value,
+    image: imgData
+  };
+
+  const encoded = btoa(JSON.stringify(data));
+  finalLink =
+    location.origin +
+    location.pathname.replace("index.html", "") +
+    "gift.html?data=" +
+    encoded;
+
+  document.getElementById("copyBtn").style.display = "block";
+}
+
+function copy() {
+  navigator.clipboard.writeText(finalLink);
+  alert("Link copied 💖");
+}
+</script>
+
+</body>
+</html>
