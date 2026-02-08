@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>💖 Valentine Question</title>
+<title>🎁 A Surprise</title>
 
 <style>
 body {
@@ -17,10 +17,25 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
+/* 🎁 Gift box */
+#giftBox {
+  font-size: 130px;
+  cursor: pointer;
+  animation: bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+/* 💖 Question card */
 .card {
-  background: rgba(255, 255, 255, 0.85);
+  display: none;
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 30px;
   padding: 40px 25px;
   width: 90%;
@@ -84,7 +99,11 @@ button {
 
 <body>
 
-<div class="card">
+<!-- 🎁 Gift box first -->
+<div id="giftBox">🎁</div>
+
+<!-- 💖 Question card -->
+<div class="card" id="questionCard">
   <h1>
     <span id="to"></span>,<br>
     Will you be my Valentine? 💖
@@ -109,8 +128,12 @@ const data = JSON.parse(
   decodeURIComponent(escape(atob(params.get("data"))))
 );
 
-// Show only TO name
-document.getElementById("to").innerText = data.to;
+// Show gift first → then question
+document.getElementById("giftBox").onclick = () => {
+  document.getElementById("giftBox").style.display = "none";
+  document.getElementById("questionCard").style.display = "block";
+  document.getElementById("to").innerText = data.to;
+};
 
 function yes() {
   music.play();
