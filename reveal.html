@@ -11,7 +11,6 @@ body {
   min-height: 100vh;
   font-family: Arial, sans-serif;
 
-  /* 🌹 Background image */
   background-image: url("valentine-bg.jpg");
   background-size: cover;
   background-position: center;
@@ -24,44 +23,56 @@ body {
 }
 
 .card {
-  background: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 18px;
-  padding: 28px 22px;
+  padding: 24px 18px;
   max-width: 420px;
   width: 90%;
+  max-height: 80vh;
+
+  display: flex;
+  flex-direction: column;
   text-align: center;
+
   box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-  z-index: 2;
+  overflow: hidden;
 }
 
 h1 {
   color: #d6336c;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .message {
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.6;
-  margin: 18px 0;
+  margin: 15px 0;
+
+  overflow-y: auto;
+  padding-right: 6px;
+
+  /* 🔥 FIX LONG TEXT */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 .from {
-  margin-top: 14px;
+  margin-top: 12px;
   font-style: italic;
   color: #555;
 }
 
-/* 💓 Floating hearts */
+/* 💓 floating hearts */
 .heart {
   position: fixed;
   bottom: -20px;
-  font-size: 22px;
+  font-size: 20px;
   animation: floatUp 4s linear forwards;
-  z-index: 1;
 }
 
 @keyframes floatUp {
-  0% { transform: translateY(0); opacity: 1; }
+  0% { opacity: 1; }
   100% { transform: translateY(-700px); opacity: 0; }
 }
 </style>
@@ -89,21 +100,18 @@ document.getElementById("to").innerText = data.to;
 document.getElementById("from").innerText = data.from;
 document.getElementById("msg").innerText = data.message;
 
-/* 💓 Floating hearts */
+// 💓 hearts
 setInterval(() => {
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.innerText = "💓";
-  heart.style.left = Math.random() * window.innerWidth + "px";
-  document.body.appendChild(heart);
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.innerText = "💓";
+  h.style.left = Math.random() * window.innerWidth + "px";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),4000);
+}, 350);
 
-  setTimeout(() => heart.remove(), 4000);
-}, 300);
-
-/* ⏱ Silent auto-close after 60 seconds */
-setTimeout(() => {
-  window.close();
-}, 60000);
+// ⏱ silent auto close
+setTimeout(() => window.close(), 60000);
 </script>
 
 </body>
