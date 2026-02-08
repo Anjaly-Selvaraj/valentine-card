@@ -27,8 +27,14 @@ input, textarea {
 }
 
 textarea {
-  height: 90px;
+  height: 120px;
   resize: none;
+}
+
+.counter {
+  text-align: right;
+  font-size: 13px;
+  color: #777;
 }
 
 button {
@@ -47,13 +53,6 @@ button {
   display: none;
   background: #20c997;
 }
-
-.footer {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 13px;
-  color: #777;
-}
 </style>
 </head>
 
@@ -63,19 +62,32 @@ button {
 
 <input id="from" placeholder="From">
 <input id="to" placeholder="To">
-<textarea id="message" placeholder="Write your Valentine message 💖"></textarea>
-<input id="question" placeholder="Question (Eg: Will you be my Valentine?)">
+
+<textarea id="message" placeholder="Write your Valentine message (max 500 words) 💖"></textarea>
+<div class="counter">
+  <span id="wordCount">0</span> / 500 words
+</div>
 
 <button onclick="generate()">Generate Link 💝</button>
 <button id="copyBtn" onclick="copy()">Copy Link 💖</button>
 
-<div class="footer">Made with ❤️</div>
-
 <script>
 let finalLink = "";
+const msgBox = document.getElementById("message");
+const counter = document.getElementById("wordCount");
+
+// 🔢 word limit logic
+msgBox.addEventListener("input", () => {
+  let words = msgBox.value.trim().split(/\s+/).filter(w => w);
+  if (words.length > 500) {
+    msgBox.value = words.slice(0, 500).join(" ");
+    words = words.slice(0, 500);
+  }
+  counter.innerText = words.length;
+});
 
 function generate() {
-  if (!from.value || !to.value || !message.value || !question.value) {
+  if (!from.value || !to.value || !message.value) {
     alert("Please fill all fields 💕");
     return;
   }
@@ -83,8 +95,7 @@ function generate() {
   const data = {
     from: from.value,
     to: to.value,
-    message: message.value,
-    question: question.value
+    message: message.value
   };
 
   const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
@@ -98,7 +109,7 @@ function generate() {
 
 function copy() {
   navigator.clipboard.writeText(finalLink);
-  alert("Link copied 💖 Send it!");
+  alert("Link copied 💖");
 }
 </script>
 
