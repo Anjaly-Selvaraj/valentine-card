@@ -18,24 +18,25 @@ html, body {
   font-family: Arial, sans-serif;
 }
 
-/* Page background (image set via JS) */
+/* ===== BACKGROUND ===== */
 body {
-  background-size: cover;
-  background-position: center;
+  background-color: #fdecef; /* soft fallback */
   background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain; /* 🔥 IMPORTANT FIX */
 
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Card */
+/* ===== CARD ===== */
 .card {
   width: 90%;
   max-width: 420px;
   max-height: 80vh;
 
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.92);
   border-radius: 20px;
   padding: 22px 18px;
 
@@ -52,7 +53,7 @@ h1 {
   margin-bottom: 10px;
 }
 
-/* Scroll-safe message */
+/* ===== MESSAGE ===== */
 .message {
   font-size: 16px;
   line-height: 1.6;
@@ -72,11 +73,11 @@ h1 {
   color: #555;
 }
 
-/* 💓 Floating hearts */
+/* ===== FLOATING HEARTS ===== */
 .heart {
   position: fixed;
   bottom: -20px;
-  font-size: 20px;
+  font-size: 18px;
   animation: floatUp 4s linear forwards;
   pointer-events: none;
 }
@@ -107,14 +108,14 @@ const data = JSON.parse(
   decodeURIComponent(escape(atob(params.get("data"))))
 );
 
-/* ===== SET BACKGROUND BASED ON TYPE ===== */
+/* ===== SET BACKGROUND IMAGE ===== */
 if (data.type === "love") {
   document.body.style.backgroundImage = "url('love-bg.jpg')";
 } else {
   document.body.style.backgroundImage = "url('friend-bg.jpg')";
 }
 
-/* ===== SET CONTENT ===== */
+/* ===== CONTENT ===== */
 document.getElementById("to").innerText = data.to;
 document.getElementById("from").innerText = data.from;
 document.getElementById("msg").innerText = data.message;
@@ -129,7 +130,7 @@ setInterval(() => {
   setTimeout(() => h.remove(), 4000);
 }, 350);
 
-/* ===== SILENT AUTO-CLOSE ===== */
+/* ===== AUTO CLOSE (SILENT) ===== */
 setTimeout(() => {
   window.close();
 }, 60000);
