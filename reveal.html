@@ -2,16 +2,24 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+/>
 <title>💖 Valentine</title>
 
 <style>
-body {
+html, body {
   margin: 0;
-  min-height: 100vh;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
   font-family: Arial, sans-serif;
+}
 
-  background-image: url("valentine-bg.jpg");
+/* Page background (image set via JS) */
+body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -19,16 +27,17 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
 }
 
+/* Card */
 .card {
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 18px;
-  padding: 24px 18px;
-  max-width: 420px;
   width: 90%;
+  max-width: 420px;
   max-height: 80vh;
+
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  padding: 22px 18px;
 
   display: flex;
   flex-direction: column;
@@ -43,15 +52,15 @@ h1 {
   margin-bottom: 10px;
 }
 
+/* Scroll-safe message */
 .message {
   font-size: 16px;
   line-height: 1.6;
-  margin: 15px 0;
+  margin: 14px 0;
 
   overflow-y: auto;
   padding-right: 6px;
 
-  /* 🔥 FIX LONG TEXT */
   word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: pre-wrap;
@@ -63,12 +72,13 @@ h1 {
   color: #555;
 }
 
-/* 💓 floating hearts */
+/* 💓 Floating hearts */
 .heart {
   position: fixed;
   bottom: -20px;
   font-size: 20px;
   animation: floatUp 4s linear forwards;
+  pointer-events: none;
 }
 
 @keyframes floatUp {
@@ -81,7 +91,7 @@ h1 {
 <body>
 
 <div class="card">
-  <h1>Dear <span id="to"></span> 💝</h1>
+  <h1>Hi <span id="to"></span> 💝</h1>
 
   <div class="message" id="msg"></div>
 
@@ -91,27 +101,38 @@ h1 {
 </div>
 
 <script>
+/* ===== READ DATA ===== */
 const params = new URLSearchParams(window.location.search);
 const data = JSON.parse(
   decodeURIComponent(escape(atob(params.get("data"))))
 );
 
+/* ===== SET BACKGROUND BASED ON TYPE ===== */
+if (data.type === "love") {
+  document.body.style.backgroundImage = "url('love-bg.jpg')";
+} else {
+  document.body.style.backgroundImage = "url('friend-bg.jpg')";
+}
+
+/* ===== SET CONTENT ===== */
 document.getElementById("to").innerText = data.to;
 document.getElementById("from").innerText = data.from;
 document.getElementById("msg").innerText = data.message;
 
-// 💓 hearts
+/* ===== HEARTS ===== */
 setInterval(() => {
   const h = document.createElement("div");
   h.className = "heart";
   h.innerText = "💓";
   h.style.left = Math.random() * window.innerWidth + "px";
   document.body.appendChild(h);
-  setTimeout(()=>h.remove(),4000);
+  setTimeout(() => h.remove(), 4000);
 }, 350);
 
-// ⏱ silent auto close
-setTimeout(() => window.close(), 60000);
+/* ===== SILENT AUTO-CLOSE ===== */
+setTimeout(() => {
+  window.close();
+}, 60000);
 </script>
 
 </body>
