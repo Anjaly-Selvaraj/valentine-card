@@ -3,135 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎁 Valentine Gift</title>
+<title>💖 Valentine</title>
 
 <style>
 body {
   font-family: Arial, sans-serif;
-  background: #ffe6eb;
+  background: #fff0f5;
   text-align: center;
-  padding: 25px;
-  overflow: hidden;
+  padding: 30px;
 }
 
-h2 {
+h1 {
   color: #d6336c;
-}
-
-#gift {
-  font-size: 120px;
-  cursor: pointer;
-  margin: 20px 0;
-  animation: bounce 1.5s infinite;
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-#content {
-  display: none;
 }
 
 p {
   font-size: 18px;
-  margin: 15px 0;
-}
-
-button {
-  padding: 12px 28px;
-  font-size: 16px;
-  margin: 10px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-}
-
-.yes {
-  background: #ff4d6d;
-  color: white;
-}
-
-.no {
-  background: #adb5bd;
-}
-
-/* 🎉 Party popper animation */
-.popper {
-  position: fixed;
-  font-size: 30px;
-  animation: pop 1.5s linear forwards;
-}
-
-@keyframes pop {
-  0% { transform: translateY(0) scale(1); opacity: 1; }
-  100% { transform: translateY(-300px) scale(1.5); opacity: 0; }
 }
 </style>
 </head>
 
 <body>
 
-<h2>Happy Valentine’s Day, My Dear 💝</h2>
+<h1>💝 Valentine Message 💝</h1>
 
-<div id="gift">🎁</div>
+<p><strong>From:</strong> <span id="from"></span></p>
+<p><strong>To:</strong> <span id="to"></span></p>
 
-<div id="content">
-  <p><strong>From:</strong> <span id="from"></span></p>
-  <p><strong>To:</strong> <span id="to"></span></p>
+<p id="msg"></p>
 
-  <p id="msg"></p>
-  <h3 id="question"></h3>
-
-  <button class="yes" onclick="yes()">YES 💖</button>
-  <button class="no" onclick="no()">NO 💔</button>
-</div>
+<p style="margin-top:20px;color:#777">
+This page will close automatically 💕
+</p>
 
 <script>
 const params = new URLSearchParams(window.location.search);
-const encodedData = params.get("data");
+const data = JSON.parse(
+  decodeURIComponent(escape(atob(params.get("data"))))
+);
 
-if (!encodedData) {
-  document.body.innerHTML = "<h2>Invalid link 💔</h2>";
-} else {
-  const data = JSON.parse(
-    decodeURIComponent(escape(atob(encodedData)))
-  );
+from.innerText = data.from;
+to.innerText = data.to;
+msg.innerText = data.message;
 
-  document.getElementById("gift").onclick = () => {
-    document.getElementById("from").innerText = data.from;
-    document.getElementById("to").innerText = data.to;
-    document.getElementById("msg").innerText = data.message;
-    document.getElementById("question").innerText = data.question;
-    document.getElementById("content").style.display = "block";
-  };
-}
-
-function yes() {
-  // 🎉 show party poppers
-  for (let i = 0; i < 15; i++) {
-    const pop = document.createElement("div");
-    pop.className = "popper";
-    pop.innerText = "🎉";
-    pop.style.left = Math.random() * window.innerWidth + "px";
-    pop.style.top = window.innerHeight + "px";
-    document.body.appendChild(pop);
-
-    setTimeout(() => pop.remove(), 1500);
-  }
-
-  // ⏱ redirect after animation
-  setTimeout(() => {
-    window.location.href =
-      "reveal.html?data=" + encodedData;
-  }, 1500);
-}
-
-function no() {
-  document.body.innerHTML = "<h1>😭😭😭</h1>";
-  setTimeout(() => window.close(), 2000);
-}
+// ⏱ auto close after 60 seconds
+setTimeout(() => {
+  window.close();
+}, 60000);
 </script>
 
 </body>
