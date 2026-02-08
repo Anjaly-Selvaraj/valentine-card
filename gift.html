@@ -1,26 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Open Your Gift 🎁</title>
-  <style>
-    body { text-align: center; font-family: Arial; }
-    #question { display:none; }
-    button { padding:10px 20px; margin:10px; }
-  </style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gift 🎁</title>
+
+<style>
+body {
+  text-align: center;
+  font-family: Arial;
+  background: #ffe6eb;
+}
+#gift {
+  font-size: 120px;
+  cursor: pointer;
+}
+button {
+  padding: 12px 25px;
+  margin: 10px;
+  font-size: 16px;
+}
+</style>
 </head>
+
 <body>
 
-<h1 id="gift">🎁</h1>
+<h2>Tap the Gift 🎁</h2>
+<div id="gift">🎁</div>
 
-<div id="question">
-  <h2 id="q"></h2>
+<div id="question" style="display:none">
+  <h3 id="q"></h3>
   <button onclick="yes()">YES 💖</button>
   <button onclick="no()">NO 💔</button>
 </div>
 
 <script>
-const params = new URLSearchParams(location.search);
-const data = JSON.parse(atob(params.get("data")));
+const p = new URLSearchParams(location.search);
+const data = JSON.parse(atob(p.get("data")));
 
 gift.onclick = () => {
   q.innerText = data.question;
@@ -29,11 +44,10 @@ gift.onclick = () => {
 
 function no() {
   document.body.innerHTML = "<h1>😭😭😭</h1>";
-  setTimeout(() => window.close(), 2000);
+  setTimeout(()=>window.close(),2000);
 }
-
 function yes() {
-  location.href = "reveal.html?data=" + params.get("data");
+  location.href = "reveal.html?data=" + p.get("data");
 }
 </script>
 
