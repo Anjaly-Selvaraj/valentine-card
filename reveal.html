@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Valentine 💘</title>
+  <style>
+    body { text-align:center; font-family:Arial; }
+  </style>
+</head>
+<body>
+
+<h1 id="event"></h1>
+<h2 id="msg"></h2>
+<p>💖 From your Valentine 💖</p>
+
+<script>
+const params = new URLSearchParams(location.search);
+const data = JSON.parse(atob(params.get("data")));
+
+event.innerText = data.event;
+msg.innerText = data.message;
+
+setTimeout(() => window.close(), 60000);
+</script>
+
+</body>
+</html>
