@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create Valentine Card 💝</title>
+  <style>
+    body { font-family: Arial; text-align: center; }
+    input, textarea { width: 80%; margin: 6px; padding: 8px; }
+    button { padding: 10px 20px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<h2>Create Valentine Card 💌</h2>
+
+<input id="event" placeholder="Event Name"><br>
+<input id="from" placeholder="From"><br>
+<input id="to" placeholder="To"><br>
+<textarea id="message" placeholder="Message"></textarea><br>
+<input id="question" placeholder="Question"><br>
+<input type="file" id="image"><br><br>
+
+<button onclick="generate()">Generate Link</button><br><br>
+
+<input id="result" readonly style="width:80%">
+<button onclick="copy()">Copy</button>
+
+<script>
+function generate() {
+  const data = {
+    event: event.value,
+    from: from.value,
+    to: to.value,
+    message: message.value,
+    question: question.value
+  };
+
+  const encoded = btoa(JSON.stringify(data));
+  const url = location.origin + location.pathname.replace("index.html","") +
+              "gift.html?data=" + encoded;
+
+  result.value = url;
+}
+
+function copy() {
+  navigator.clipboard.writeText(result.value);
+  alert("Link copied 💖");
+}
+</script>
+
+</body>
+</html>
