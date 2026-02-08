@@ -9,7 +9,6 @@
 <title>Create Valentine 💖</title>
 
 <style>
-/* 🔒 HARD RESET */
 html, body {
   margin: 0;
   padding: 0;
@@ -18,7 +17,7 @@ html, body {
   font-family: "Comic Sans MS", Arial, sans-serif;
 }
 
-/* 🌸 Page wrapper */
+/* Page background */
 .page {
   min-height: 100vh;
   width: 100%;
@@ -29,7 +28,7 @@ html, body {
   padding: 12px;
 }
 
-/* 💗 Card */
+/* Card */
 .card {
   width: 100%;
   max-width: 360px;
@@ -37,16 +36,15 @@ html, body {
   border-radius: 26px;
   padding: 24px 20px;
   box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+  overflow: hidden; /* 🔥 CRITICAL FIX */
 }
 
-/* 🎀 Headings */
 h2 {
   text-align: center;
   color: #c9184a;
   margin: 6px 0 18px;
 }
 
-/* 📝 Labels & inputs */
 label {
   display: block;
   font-size: 14px;
@@ -55,14 +53,15 @@ label {
 }
 
 input, textarea {
-  width: 100%;
+  width: calc(100% - 4px); /* 🔥 PREVENT OVERFLOW */
   padding: 14px;
   margin-top: 6px;
-  border-radius: 18px;
+  border-radius: 14px; /* slightly smaller */
   border: none;
   background: #fdecef;
   font-size: 15px;
   outline: none;
+  display: block;
 }
 
 textarea {
@@ -70,7 +69,6 @@ textarea {
   resize: none;
 }
 
-/* 🔢 Counter */
 .counter {
   text-align: right;
   font-size: 12px;
@@ -78,7 +76,6 @@ textarea {
   margin-top: 4px;
 }
 
-/* 🔘 Buttons */
 .buttons {
   display: flex;
   gap: 10px;
@@ -88,7 +85,7 @@ textarea {
 button {
   flex: 1;
   padding: 14px;
-  border-radius: 25px;
+  border-radius: 22px;
   border: none;
   font-size: 15px;
   cursor: pointer;
@@ -106,7 +103,6 @@ button {
   display: none;
 }
 
-/* ❤️ Footer */
 .footer {
   text-align: center;
   margin-top: 16px;
@@ -153,7 +149,6 @@ let finalLink = "";
 const msgBox = document.getElementById("message");
 const counter = document.getElementById("wordCount");
 
-/* 🔢 250 WORD LIMIT */
 msgBox.addEventListener("input", () => {
   let words = msgBox.value.trim().split(/\s+/).filter(w => w);
   if (words.length > 250) {
