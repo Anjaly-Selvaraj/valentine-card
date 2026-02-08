@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Open Your Gift 🎁</title>
+  <style>
+    body { text-align: center; font-family: Arial; }
+    #question { display:none; }
+    button { padding:10px 20px; margin:10px; }
+  </style>
+</head>
+<body>
+
+<h1 id="gift">🎁</h1>
+
+<div id="question">
+  <h2 id="q"></h2>
+  <button onclick="yes()">YES 💖</button>
+  <button onclick="no()">NO 💔</button>
+</div>
+
+<script>
+const params = new URLSearchParams(location.search);
+const data = JSON.parse(atob(params.get("data")));
+
+gift.onclick = () => {
+  q.innerText = data.question;
+  question.style.display = "block";
+};
+
+function no() {
+  document.body.innerHTML = "<h1>😭😭😭</h1>";
+  setTimeout(() => window.close(), 2000);
+}
+
+function yes() {
+  location.href = "reveal.html?data=" + params.get("data");
+}
+</script>
+
+</body>
+</html>
