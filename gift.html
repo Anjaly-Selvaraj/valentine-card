@@ -9,26 +9,36 @@ body {
   text-align: center;
   font-family: Arial;
   background: #ffe6eb;
+  padding: 20px;
 }
 #gift {
   font-size: 120px;
   cursor: pointer;
+}
+img {
+  max-width: 90%;
+  border-radius: 10px;
 }
 button {
   padding: 12px 25px;
   margin: 10px;
   font-size: 16px;
 }
+#content { display:none; }
 </style>
 </head>
 
 <body>
 
-<h2>Tap the Gift 🎁</h2>
+<h2>Happy Valentine’s Day, My Dear 💝</h2>
+
 <div id="gift">🎁</div>
 
-<div id="question" style="display:none">
+<div id="content">
+  <p id="msg"></p>
+  <img id="img">
   <h3 id="q"></h3>
+
   <button onclick="yes()">YES 💖</button>
   <button onclick="no()">NO 💔</button>
 </div>
@@ -38,8 +48,13 @@ const p = new URLSearchParams(location.search);
 const data = JSON.parse(atob(p.get("data")));
 
 gift.onclick = () => {
+  msg.innerText = data.message;
   q.innerText = data.question;
-  question.style.display = "block";
+
+  if (data.image) img.src = data.image;
+  else img.style.display = "none";
+
+  content.style.display = "block";
 };
 
 function no() {
