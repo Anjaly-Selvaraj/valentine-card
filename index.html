@@ -2,49 +2,56 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+/>
 <title>Create Valentine 💖</title>
 
 <style>
-/* 🔒 GLOBAL FIX */
-* {
-  box-sizing: border-box;
+/* 🔒 HARD RESET */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  font-family: "Comic Sans MS", Arial, sans-serif;
 }
 
-body {
-  margin: 0;
+/* 🌸 Page wrapper */
+.page {
   min-height: 100vh;
-  font-family: "Comic Sans MS", Arial, sans-serif;
-  overflow-x: hidden; /* 🔥 FIX RIGHT GAP */
-
+  width: 100%;
   background: linear-gradient(180deg, #f8b6d2, #fbe3ef);
-
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px; /* MOBILE SAFE */
+  padding: 12px;
 }
 
+/* 💗 Card */
 .card {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 28px;
-  padding: 26px 20px;
   width: 100%;
-  max-width: 360px; /* 🔥 KEY FIX */
-  box-shadow: 0 10px 22px rgba(0,0,0,0.15);
+  max-width: 360px;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 26px;
+  padding: 24px 20px;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.15);
 }
 
+/* 🎀 Headings */
 h2 {
   text-align: center;
   color: #c9184a;
-  margin-bottom: 18px;
+  margin: 6px 0 18px;
 }
 
+/* 📝 Labels & inputs */
 label {
+  display: block;
   font-size: 14px;
   color: #c9184a;
   margin-top: 12px;
-  display: block;
 }
 
 input, textarea {
@@ -63,6 +70,7 @@ textarea {
   resize: none;
 }
 
+/* 🔢 Counter */
 .counter {
   text-align: right;
   font-size: 12px;
@@ -70,6 +78,7 @@ textarea {
   margin-top: 4px;
 }
 
+/* 🔘 Buttons */
 .buttons {
   display: flex;
   gap: 10px;
@@ -97,6 +106,7 @@ button {
   display: none;
 }
 
+/* ❤️ Footer */
 .footer {
   text-align: center;
   margin-top: 16px;
@@ -108,32 +118,34 @@ button {
 
 <body>
 
-<div class="card">
+<div class="page">
+  <div class="card">
 
-  <h2>Create Valentine 💖</h2>
+    <h2>Create Valentine 💖</h2>
 
-  <label>Your Name</label>
-  <input id="from" placeholder="Anjaly">
+    <label>Your Name</label>
+    <input id="from" placeholder="Anjaly">
 
-  <label>Your Valentine’s Name</label>
-  <input id="to" placeholder="Jani">
+    <label>Your Valentine’s Name</label>
+    <input id="to" placeholder="Jani">
 
-  <label>Your Message</label>
-  <textarea id="message" placeholder="Write something sweet (max 500 words) 💌"></textarea>
+    <label>Your Message</label>
+    <textarea id="message" placeholder="Write something sweet (max 250 words) 💌"></textarea>
 
-  <div class="counter">
-    <span id="wordCount">0</span> / 500 words
+    <div class="counter">
+      <span id="wordCount">0</span> / 250 words
+    </div>
+
+    <div class="buttons">
+      <button class="generate" onclick="generate()">Generate 💖</button>
+      <button class="copy" id="copyBtn" onclick="copy()">Copy link 🔗</button>
+    </div>
+
+    <div class="footer">
+      Made with ❤️
+    </div>
+
   </div>
-
-  <div class="buttons">
-    <button class="generate" onclick="generate()">Generate 💖</button>
-    <button class="copy" id="copyBtn" onclick="copy()">Copy link 🔗</button>
-  </div>
-
-  <div class="footer">
-    Made with ❤️
-  </div>
-
 </div>
 
 <script>
@@ -141,11 +153,12 @@ let finalLink = "";
 const msgBox = document.getElementById("message");
 const counter = document.getElementById("wordCount");
 
+/* 🔢 250 WORD LIMIT */
 msgBox.addEventListener("input", () => {
   let words = msgBox.value.trim().split(/\s+/).filter(w => w);
-  if (words.length > 500) {
-    msgBox.value = words.slice(0, 500).join(" ");
-    words = words.slice(0, 500);
+  if (words.length > 250) {
+    msgBox.value = words.slice(0, 250).join(" ");
+    words = words.slice(0, 250);
   }
   counter.innerText = words.length;
 });
