@@ -27,8 +27,8 @@ input, textarea {
 }
 
 textarea {
-  resize: none;
   height: 90px;
+  resize: none;
 }
 
 button {
@@ -43,17 +43,9 @@ button {
   cursor: pointer;
 }
 
-button:hover {
-  background: #e63956;
-}
-
 #copyBtn {
   display: none;
   background: #20c997;
-}
-
-#copyBtn:hover {
-  background: #17a589;
 }
 
 .footer {
@@ -68,3 +60,47 @@ button:hover {
 <body>
 
 <h2>Create Valentine Card 💌</h2>
+
+<input id="from" placeholder="From">
+<input id="to" placeholder="To">
+<textarea id="message" placeholder="Write your Valentine message 💖"></textarea>
+<input id="question" placeholder="Question (Eg: Will you be my Valentine?)">
+
+<button onclick="generate()">Generate Link 💝</button>
+<button id="copyBtn" onclick="copy()">Copy Link 💖</button>
+
+<div class="footer">Made with ❤️</div>
+
+<script>
+let finalLink = "";
+
+function generate() {
+  if (!from.value || !to.value || !message.value || !question.value) {
+    alert("Please fill all fields 💕");
+    return;
+  }
+
+  const data = {
+    from: from.value,
+    to: to.value,
+    message: message.value,
+    question: question.value
+  };
+
+  const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+  finalLink =
+    location.origin +
+    location.pathname.replace("index.html","") +
+    "gift.html?data=" + encoded;
+
+  document.getElementById("copyBtn").style.display = "block";
+}
+
+function copy() {
+  navigator.clipboard.writeText(finalLink);
+  alert("Link copied 💖 Send it!");
+}
+</script>
+
+</body>
+</html>
