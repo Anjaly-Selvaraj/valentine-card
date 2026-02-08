@@ -3,74 +3,104 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎁 Valentine Gift</title>
+<title>💖 Valentine Question</title>
 
 <style>
 body {
-  font-family: Arial;
-  background: #ffe6eb;
+  margin: 0;
+  height: 100vh;
+  font-family: "Comic Sans MS", Arial, sans-serif;
+
+  /* 💗 soft pink gradient background */
+  background: linear-gradient(180deg, #f8b6d2, #fbe3ef);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 30px;
+  padding: 40px 25px;
+  width: 90%;
+  max-width: 360px;
   text-align: center;
-  padding: 25px;
-  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
 }
 
-h2 { color: #d6336c; }
-
-#gift {
-  font-size: 120px;
-  cursor: pointer;
-  animation: bounce 1.5s infinite;
+h1 {
+  color: #c9184a;
+  font-size: 26px;
+  margin-bottom: 10px;
 }
 
-@keyframes bounce {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+.sub {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 30px;
 }
 
-#content { display: none; }
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
 
 button {
-  padding: 12px 28px;
-  margin: 10px;
-  border-radius: 8px;
-  border: none;
+  width: 120px;
+  padding: 14px;
   font-size: 16px;
+  border-radius: 25px;
+  border: none;
   cursor: pointer;
 }
 
-.yes { background: #ff4d6d; color: white; }
-.no { background: #adb5bd; }
+.yes {
+  background: #ff4d6d;
+  color: white;
+  font-weight: bold;
+}
 
+.no {
+  background: #f1f1f1;
+  color: #999;
+}
+
+/* 💓 floating hearts */
 .heart {
   position: fixed;
   bottom: -20px;
-  font-size: 24px;
-  animation: floatUp 3s linear forwards;
+  font-size: 22px;
+  animation: floatUp 4s linear forwards;
 }
 
 @keyframes floatUp {
   0% { opacity: 1; }
-  100% { transform: translateY(-600px); opacity: 0; }
+  100% { transform: translateY(-700px); opacity: 0; }
 }
 </style>
 </head>
 
 <body>
 
-<h2>Happy Valentine’s Day, My Dear 💝</h2>
+<div class="card">
+  <h1>
+    <span id="to"></span>,<br>
+    Will you be my Valentine? 💖
+  </h1>
 
-<div id="gift">🎁</div>
+  <div class="sub">
+    Choose wisely (The “No” button is shy 😉)
+  </div>
 
-<div id="content">
-  <p><b>From:</b> <span id="from"></span></p>
-  <p><b>To:</b> <span id="to"></span></p>
-  <p id="msg"></p>
-  <h3 id="question"></h3>
-
-  <button class="yes" onclick="yes()">YES 💖</button>
-  <button class="no" onclick="no()">NO 💔</button>
+  <div class="buttons">
+    <button class="yes" onclick="yes()">YES</button>
+    <button class="no" onclick="no()">NO</button>
+  </div>
 </div>
 
+<!-- 🎵 Romantic music -->
 <audio id="music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 
 <script>
@@ -79,13 +109,8 @@ const data = JSON.parse(
   decodeURIComponent(escape(atob(params.get("data"))))
 );
 
-gift.onclick = () => {
-  from.innerText = data.from;
-  to.innerText = data.to;
-  msg.innerText = data.message;
-  question.innerText = data.question;
-  content.style.display = "block";
-};
+// Show only TO name
+document.getElementById("to").innerText = data.to;
 
 function yes() {
   music.play();
@@ -96,8 +121,8 @@ function yes() {
     h.innerText = "💓";
     h.style.left = Math.random() * window.innerWidth + "px";
     document.body.appendChild(h);
-    setTimeout(()=>h.remove(),3000);
-  }, 200);
+    setTimeout(()=>h.remove(),4000);
+  }, 250);
 
   setTimeout(() => {
     clearInterval(hearts);
@@ -106,7 +131,7 @@ function yes() {
 }
 
 function no() {
-  document.body.innerHTML = "<h1>😭😭😭</h1>";
+  document.body.innerHTML = "<h1 style='font-size:60px'>😭💔</h1>";
   setTimeout(()=>window.close(),2000);
 }
 </script>
